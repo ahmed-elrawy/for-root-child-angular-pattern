@@ -11,7 +11,8 @@ import { PollingModule } from 'polling';
   imports: [
     CommonModule,
     LazyRoutingModule,
-    PollingModule
+    PollingModule.forChild()
+    // PollingModule.forChild({interval: 4000})
   ]
 })
 export class LazyModule { }

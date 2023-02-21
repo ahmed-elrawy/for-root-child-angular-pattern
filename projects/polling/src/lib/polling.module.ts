@@ -1,6 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { PollingService } from './polling.service';
+import { PollingConfig, PollingService,INTERVAL } from './polling.service';
 import { PollingComponent } from './polling.component';
+// import { INTERVAL, PollingConfig } from 'polling';
 
 
 
@@ -13,12 +14,24 @@ import { PollingComponent } from './polling.component';
   exports: [
     PollingComponent
   ],
+  // providers: [PollingService]
+
 })
 export class PollingModule { 
   static forRoot(): ModuleWithProviders<PollingModule>{
     return {
       ngModule: PollingModule,
       providers: [PollingService]
+    }
+  }
+
+  static forChild(config?: PollingConfig): ModuleWithProviders<PollingModule> {
+    return {
+      ngModule : PollingModule,
+      providers: [PollingService, {
+        provide: INTERVAL,
+        useValue: config?.interval || 3000
+      }]
     }
   }
 

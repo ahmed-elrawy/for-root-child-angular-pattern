@@ -1,13 +1,15 @@
-import { Injectable } from '@angular/core';
-import { timer } from 'rxjs';
+import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { interval, timer } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
 
+export interface PollingConfig {
+  interval: number
+}
 
-@Injectable({
-  providedIn: 'root'
-})
+export const INTERVAL = new InjectionToken<number>('interval');
+@Injectable()
 export class PollingService {
-  public polling$ = timer(0, 1000).pipe(shareReplay());
+  public polling$ = timer(0, this.interval|| 1000 ).pipe(shareReplay());
 
-  constructor() { }
+  constructor(@Optional() @Inject(INTERVAL) private interval: number) { }
 }
